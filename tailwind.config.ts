@@ -10,29 +10,36 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Pristine tinted light neutrals
-        neutral: {
-          50: "#fafaf9",
-          100: "#f5f5f4",
-          150: "#eeeee9",
-          200: "#e7e5e4",
-          300: "#d6d3d1",
-          400: "#a8a29e",
-          500: "#78716c",
-          600: "#57534e",
-          700: "#44403c",
-          800: "#292524",
-          900: "#1c1917",
-          950: "#0c0a09",
+        // Luxury Mediterranean architectural travertine / warm linen palette
+        stone: {
+          50: "#FAF9F5",
+          100: "#F5F3ED",
+          150: "#EFECE3",
+          200: "#E5E1D6",
+          300: "#D3CDBC",
+          400: "#A8A08D",
+          500: "#7D7563",
+          600: "#5D5749",
+          700: "#443F34",
+          800: "#2B2821",
+          900: "#181713",
+          950: "#0F0E0B",
         },
-        // Professional emerald accent for main buttons and links
+        // Deep architectural navy / obsidian ink for high-end contrast
+        ink: {
+          DEFAULT: "#0F141C",
+          soft: "#1A202C",
+          muted: "#4A5568",
+          subtle: "#718096",
+          faint: "#A0AEC0",
+        },
+        // Editorial Mediterranean juniper / emerald accent
         accent: {
-          DEFAULT: "#047857", // Deep emerald
-          hover: "#065f46",
-          active: "#064e3b",
-          subtle: "#ecfdf5",
-          border: "#a7f3d0",
-          foreground: "#ffffff",
+          DEFAULT: "#0E5A44",
+          hover: "#094333",
+          light: "#E8F4F0",
+          border: "#BCE2D7",
+          gold: "#C5A880", // Warm Mediterranean sand gold
         },
       },
       fontFamily: {
@@ -40,16 +47,20 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       borderRadius: {
-        // Superellipse squircle curvature
-        "super-sm": "14px",
-        super: "22px",
+        "super-sm": "12px",
+        super: "20px",
         "super-lg": "28px",
-        theme: "22px",
+      },
+      letterSpacing: {
+        tightest: "-0.04em",
+        tighter: "-0.02em",
+        widest: "0.2em",
+        mega: "0.28em",
       },
       boxShadow: {
-        subtle: "0 1px 2px 0 rgba(0, 0, 0, 0.03)",
-        card: "0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03)",
-        elevated: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02)",
+        subtle: "0 1px 2px 0 rgba(15, 20, 28, 0.03)",
+        card: "0 1px 3px 0 rgba(15, 20, 28, 0.04), 0 1px 2px -1px rgba(15, 20, 28, 0.03)",
+        elevated: "0 12px 30px -10px rgba(15, 20, 28, 0.06), 0 4px 12px -2px rgba(15, 20, 28, 0.02)",
       },
     },
   },

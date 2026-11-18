@@ -1,14 +1,15 @@
 "use client";
 
 import * as React from "react";
+import { Preloader } from "@/components/layout/Preloader";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
-import { Experience } from "@/components/sections/Experience";
+import { Manifesto } from "@/components/sections/Manifesto";
 import { Projects } from "@/components/sections/Projects";
 import { PortfolioSimulator } from "@/components/sections/PortfolioSimulator";
+import { Experience } from "@/components/sections/Experience";
 import { Skills } from "@/components/sections/Skills";
 import { Credentials } from "@/components/sections/Credentials";
-import { ConsultationCTA } from "@/components/sections/ConsultationCTA";
 import { Footer } from "@/components/layout/Footer";
 import { ConsultationModal } from "@/components/modals/ConsultationModal";
 
@@ -19,23 +20,26 @@ export default function Home() {
   const closeContact = () => setIsContactOpen(false);
 
   return (
-    <div className="relative min-h-screen bg-neutral-50 flex flex-col justify-between">
+    <div className="relative min-h-screen bg-stone-50 text-ink antialiased selection:bg-accent selection:text-white">
+      {/* Cinematic Luxury Preloader */}
+      <Preloader />
+
       {/* Navigation */}
       <Navbar onOpenContact={openContact} />
 
-      {/* Main Content Sections */}
+      {/* Main Sections */}
       <main className="flex-1">
         <Hero onOpenContact={openContact} />
-        <Experience />
+        <Manifesto />
         <Projects />
         <PortfolioSimulator />
+        <Experience />
         <Skills />
         <Credentials />
-        <ConsultationCTA onOpenContact={openContact} />
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenContact={openContact} />
 
       {/* Contact Dialog */}
       <ConsultationModal

@@ -2,8 +2,7 @@
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Badge";
-import { ArrowRight, MapPin, Mail } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface HeroProps {
@@ -12,73 +11,104 @@ interface HeroProps {
 
 export function Hero({ onOpenContact }: HeroProps) {
   return (
-    <section id="about" className="pt-28 sm:pt-36 pb-16 sm:pb-20 border-b border-neutral-200/80 bg-white">
-      <Container size="default">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
-          {/* Status chips (no pulsing dots) */}
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            <Chip variant="accent">
-              Senior FP&amp;A Analyst at GEICO
-            </Chip>
-            <Chip variant="neutral">
-              MS Quantitative Finance (GPA 3.92)
-            </Chip>
-            <Chip variant="neutral">
-              FINRA SIE
-            </Chip>
+    <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between pt-28 sm:pt-36 pb-12 sm:pb-16 border-b border-stone-200/80 overflow-hidden">
+      {/* Background architectural ambiance dots */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.035] bg-[radial-gradient(#0F141C_1px,transparent_1px)] [background-size:24px_24px]"></div>
+
+      <Container size="wide" className="relative z-10 flex-1 flex flex-col justify-between">
+        {/* Top Eyebrow & Live Status Metadata */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-stone-200/60">
+          <div className="flex items-center gap-3 text-xs tracking-mega uppercase font-mono text-ink-muted">
+            <span className="w-2 h-2 rounded-full bg-accent"></span>
+            <span>Senior FP&amp;A Lead @ GEICO</span>
+            <span className="text-stone-300">•</span>
+            <span>$25M Business Unit</span>
           </div>
 
-          {/* Simple, natural personal heading (no em dash) */}
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-900 leading-[1.2]">
-            Financial analyst specializing in financial modeling, forecasting, and data analytics.
-          </h1>
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-muted">
+            <span className="text-stone-400">COORDINATES</span>
+            <span className="text-ink font-semibold">41.8781° N, 87.6298° W</span>
+          </div>
+        </div>
 
-          {/* Natural supporting copy */}
-          <p className="mt-4 text-base text-neutral-500 leading-relaxed">
-            I lead Financial Planning and Analysis for the $25M Emerging Business unit at GEICO in Chicago. My work connects quantitative methods and corporate finance, building multi-year forecasting models, automated data pipelines in SQL and Snowflake, and executive dashboards for leadership.
-          </p>
+        {/* Center Grand Editorial Title (Minimal text, monumental scale) */}
+        <div className="my-auto py-12 sm:py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6 max-w-5xl"
+          >
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-ink leading-[0.98] uppercase">
+              QUANTITATIVE
+              <br />
+              <span className="font-light italic tracking-tight font-serif text-ink-muted">
+                Intelligence.
+              </span>
+              <br />
+              CAPITAL RIGOR.
+            </h1>
 
-          {/* Focal Point: ONE primary button, second button as a text link */}
-          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <Button
-              size="md"
-              variant="primary"
-              onClick={onOpenContact}
-              className="w-full sm:w-auto"
-            >
-              Get in touch
-            </Button>
+            {/* Ultra-distilled one-sentence statement (No content heaviness) */}
+            <p className="text-base sm:text-xl text-ink-muted max-w-2xl font-normal leading-relaxed pt-2">
+              Directing multi-year forecasting models, P&amp;L governance, and predictive capital analytics for GEICO&apos;s $25M emerging business portfolio.
+            </p>
 
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline transition-colors"
-            >
-              View selected projects
-              <ArrowRight className="w-4 h-4" />
-            </a>
+            {/* Focal Point CTAs: ONE primary button + subtle link */}
+            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+              <Button
+                size="lg"
+                variant="primary"
+                onClick={onOpenContact}
+                className="text-xs uppercase tracking-widest px-8 h-12 shadow-elevated"
+              >
+                Initiate Conversation
+              </Button>
+
+              <a
+                href="#works"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-accent hover:text-accent-hover transition-colors"
+              >
+                <span>Explore Curated Works</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Bottom Editorial Bar: Coordinates & Scroll cue */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-8 border-t border-stone-200/60 text-xs font-mono text-ink-muted">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-12">
+            <div>
+              <span className="text-[10px] uppercase tracking-widest text-stone-400 block mb-0.5">
+                Location
+              </span>
+              <span className="text-ink font-medium">Chicago, Illinois</span>
+            </div>
+            <div>
+              <span className="text-[10px] uppercase tracking-widest text-stone-400 block mb-0.5">
+                Education
+              </span>
+              <span className="text-ink font-medium">MS Quant Finance (3.92)</span>
+            </div>
+            <div>
+              <span className="text-[10px] uppercase tracking-widest text-stone-400 block mb-0.5">
+                Credential
+              </span>
+              <span className="text-ink font-medium">FINRA SIE Certified</span>
+            </div>
           </div>
 
-          {/* Location & direct email */}
-          <div className="mt-10 flex flex-wrap items-center gap-4 text-xs text-neutral-400">
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5" />
-              Chicago, IL
-            </span>
-            <span>•</span>
-            <a
-              href="mailto:mitalibardolia@gmail.com"
-              className="flex items-center gap-1.5 hover:text-neutral-700 transition-colors"
-            >
-              <Mail className="w-3.5 h-3.5" />
-              mitalibardolia@gmail.com
-            </a>
-          </div>
-        </motion.div>
+          <a
+            href="#thesis"
+            className="flex items-center gap-2 hover:text-ink transition-colors group self-start sm:self-auto"
+          >
+            <span className="text-[11px] uppercase tracking-widest">Scroll to explore</span>
+            <div className="w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center group-hover:border-ink transition-colors">
+              <ArrowDown className="w-3 h-3 animate-bounce" />
+            </div>
+          </a>
+        </div>
       </Container>
     </section>
   );

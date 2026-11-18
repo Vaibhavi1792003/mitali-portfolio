@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Container, SectionHeader } from "@/components/ui/Container";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Badge";
 import { NumberFlowWrapper } from "@/components/ui/NumberFlowWrapper";
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal, ArrowUpRight } from "lucide-react";
 
 type StrategyKey = "naive" | "custom" | "optimal";
 
@@ -24,8 +24,8 @@ interface PortfolioConfig {
 
 const portfolioStrategies: Record<StrategyKey, PortfolioConfig> = {
   naive: {
-    name: "Naïve Equal-Weight (1/N)",
-    badge: "Benchmark",
+    name: "Naïve 1/N Benchmark",
+    badge: "Equal Weighted",
     expectedReturn: 12.4,
     volatility: 16.8,
     sharpeRatio: 0.74,
@@ -41,7 +41,7 @@ const portfolioStrategies: Record<StrategyKey, PortfolioConfig> = {
   },
   custom: {
     name: "Custom Sector-Tilted",
-    badge: "Active Growth",
+    badge: "Active Conviction",
     expectedReturn: 15.8,
     volatility: 15.2,
     sharpeRatio: 1.04,
@@ -56,8 +56,8 @@ const portfolioStrategies: Record<StrategyKey, PortfolioConfig> = {
     ],
   },
   optimal: {
-    name: "Markowitz Optimal (Max Sharpe)",
-    badge: "Efficient Frontier",
+    name: "Markowitz Tangency Optimal",
+    badge: "Max Sharpe Frontier",
     expectedReturn: 18.2,
     volatility: 13.6,
     sharpeRatio: 1.34,
@@ -83,105 +83,117 @@ export function PortfolioSimulator() {
   const projectedReturnAmount = (capitalBase * currentStrategy.expectedReturn) / 100;
 
   return (
-    <section id="simulator" className="py-16 sm:py-20 border-b border-neutral-200/80 bg-white">
-      <Container size="default">
-        <SectionHeader
-          eyebrow="Interactive Project Demo"
-          title="Markowitz portfolio allocation model"
-          description="A working model based on my academic project at UT Arlington, comparing Naïve, Custom, and Markowitz Optimal asset allocation in R."
-        />
+    <section id="simulator" className="py-24 sm:py-36 border-b border-stone-200/80 bg-stone-100/40">
+      <Container size="wide">
+        {/* Section Header */}
+        <div className="flex items-center justify-between pb-6 border-b border-stone-200/60 mb-16 sm:mb-24">
+          <span className="text-xs uppercase tracking-mega font-mono text-ink-muted">
+            03 / Interactive Lab
+          </span>
+          <span className="text-xs uppercase tracking-widest font-mono text-stone-400">
+            Parametric Allocator
+          </span>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Controls */}
-          <div className="lg:col-span-5 space-y-4">
-            <Card className="p-6">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
-                <SlidersHorizontal className="w-4 h-4 text-accent" />
-                Portfolio Model
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
+          {/* Controls Column */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="space-y-3">
+              <span className="text-[11px] uppercase tracking-widest text-accent font-mono block">
+                Quadratic Allocation Engine
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-ink">
+                Markowitz Efficient Frontier Simulator
+              </h2>
+              <p className="text-sm text-ink-muted leading-relaxed">
+                Test the risk-adjusted variance reduction model formulated in R, comparing equal-weighted Naïve allocation against the optimal tangency portfolio.
+              </p>
+            </div>
 
-              {/* Strategy Selector */}
-              <div className="space-y-2 mb-4">
-                <label className="text-xs font-semibold text-neutral-700 block">
-                  Select Allocation Strategy
-                </label>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {(Object.keys(portfolioStrategies) as StrategyKey[]).map((key) => {
-                    const isSelected = selectedStrategy === key;
-                    return (
-                      <button
-                        key={key}
-                        type="button"
-                        onClick={() => setSelectedStrategy(key)}
-                        className={`p-2 text-xs font-medium rounded-super-sm border transition-all capitalize text-center ${
-                          isSelected
-                            ? "bg-neutral-900 text-white border-neutral-900"
-                            : "bg-neutral-50 border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
-                        }`}
-                      >
-                        {key}
-                      </button>
-                    );
-                  })}
-                </div>
+            {/* Strategy Selectors */}
+            <div className="space-y-3 pt-6 border-t border-stone-200/60">
+              <label className="text-xs font-mono uppercase tracking-widest text-stone-400 block">
+                Select Strategy
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {(Object.keys(portfolioStrategies) as StrategyKey[]).map((key) => {
+                  const isSelected = selectedStrategy === key;
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setSelectedStrategy(key)}
+                      className={`p-3 text-xs font-mono uppercase tracking-wider rounded-super-sm border transition-all text-center ${
+                        isSelected
+                          ? "bg-stone-900 text-stone-100 border-stone-900 shadow-subtle"
+                          : "bg-white border-stone-200 text-ink-muted hover:text-ink hover:bg-stone-50"
+                      }`}
+                    >
+                      {key}
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              {/* Capital Base Selector */}
-              <div className="space-y-2 mb-4">
-                <label className="text-xs font-semibold text-neutral-700 block">
-                  Simulated Capital Base (USD)
-                </label>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {capitalBases.map((cap) => {
-                    const isSelected = capitalBase === cap;
-                    const label = `$${cap / 1_000}K`;
-                    return (
-                      <button
-                        key={cap}
-                        type="button"
-                        onClick={() => setCapitalBase(cap)}
-                        className={`p-2 text-xs font-medium rounded-super-sm border transition-all text-center ${
-                          isSelected
-                            ? "bg-accent text-accent-foreground border-accent font-semibold"
-                            : "bg-neutral-50 border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
-                        }`}
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
+            {/* Capital Preset Selectors */}
+            <div className="space-y-3">
+              <label className="text-xs font-mono uppercase tracking-widest text-stone-400 block">
+                Investable Capital Base (USD)
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {capitalBases.map((cap) => {
+                  const isSelected = capitalBase === cap;
+                  const label = `$${cap / 1_000}K`;
+                  return (
+                    <button
+                      key={cap}
+                      type="button"
+                      onClick={() => setCapitalBase(cap)}
+                      className={`p-3 text-xs font-mono rounded-super-sm border transition-all text-center ${
+                        isSelected
+                          ? "bg-accent text-white border-accent font-semibold shadow-subtle"
+                          : "bg-white border-stone-200 text-ink-muted hover:text-ink hover:bg-stone-50"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              <div className="pt-3 border-t border-neutral-100 flex items-center justify-between text-xs">
-                <span className="text-neutral-500 font-medium">Selected Model:</span>
-                <Chip variant="accent">{currentStrategy.badge}</Chip>
-              </div>
-            </Card>
+            <div className="pt-4 flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span>Selected Frontier:</span>
+              <span className="text-ink font-semibold">{currentStrategy.name}</span>
+            </div>
           </div>
 
-          {/* Results Display */}
-          <div className="lg:col-span-7 space-y-4">
-            {/* Live Metrics */}
-            <div className="grid grid-cols-3 gap-3">
-              <Card className="p-4 bg-neutral-50/60">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 block mb-1">
-                  Expected Return
+          {/* Results Column */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Live Metrics Grid with Monumental Typography */}
+            <div className="grid grid-cols-3 gap-4">
+              <Card className="p-6 bg-white border border-stone-200/90 shadow-card">
+                <span className="text-[10px] uppercase tracking-mega font-mono text-stone-400 block mb-2">
+                  Expected Yield
                 </span>
-                <div className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 flex items-baseline">
+                <div className="text-2xl sm:text-4xl font-light font-mono text-ink tracking-tight flex items-baseline">
                   <NumberFlowWrapper
                     value={currentStrategy.expectedReturn}
                     format={{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}
                     suffix="%"
                   />
                 </div>
+                <span className="text-[11px] text-stone-400 font-mono mt-1 block">
+                  CAPM Modeled
+                </span>
               </Card>
 
-              <Card className="p-4 bg-neutral-50/60">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 block mb-1">
-                  Expected Gain
+              <Card className="p-6 bg-white border border-stone-200/90 shadow-card">
+                <span className="text-[10px] uppercase tracking-mega font-mono text-stone-400 block mb-2">
+                  Projected Gain
                 </span>
-                <div className="text-xl sm:text-2xl font-bold tracking-tight text-accent flex items-baseline">
+                <div className="text-2xl sm:text-4xl font-light font-mono text-accent tracking-tight flex items-baseline">
                   <NumberFlowWrapper
                     value={projectedReturnAmount}
                     format={{
@@ -192,49 +204,60 @@ export function PortfolioSimulator() {
                     }}
                   />
                 </div>
+                <span className="text-[11px] text-stone-400 font-mono mt-1 block">
+                  Annual Horizon
+                </span>
               </Card>
 
-              <Card className="p-4 bg-neutral-50/60">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 block mb-1">
+              <Card className="p-6 bg-white border border-stone-200/90 shadow-card">
+                <span className="text-[10px] uppercase tracking-mega font-mono text-stone-400 block mb-2">
                   Sharpe Ratio
                 </span>
-                <div className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 flex items-baseline">
+                <div className="text-2xl sm:text-4xl font-light font-mono text-ink tracking-tight flex items-baseline">
                   <NumberFlowWrapper
                     value={currentStrategy.sharpeRatio}
                     format={{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}
                   />
                 </div>
+                <span className="text-[11px] text-stone-400 font-mono mt-1 block">
+                  Risk-Adjusted
+                </span>
               </Card>
             </div>
 
-            {/* Asset Allocation Weights */}
-            <Card className="p-5">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-700">
-                  Stock Weights in {currentStrategy.name}
-                </h4>
-                <span className="text-xs text-neutral-400">
+            {/* Asset Weightings Breakdown */}
+            <Card className="p-6 sm:p-8 bg-white border border-stone-200/90 shadow-card">
+              <div className="flex items-center justify-between pb-4 border-b border-stone-100 mb-6">
+                <div>
+                  <h4 className="text-xs uppercase tracking-widest font-semibold text-ink">
+                    Weight Distribution by Equity
+                  </h4>
+                  <p className="text-xs text-ink-muted">
+                    7 multi-sector equities solved for optimal quadratic curvature.
+                  </p>
+                </div>
+                <span className="text-xs font-mono text-accent bg-accent-light px-2.5 py-1 rounded-super-sm">
                   Vol: {currentStrategy.volatility}%
                 </span>
               </div>
 
-              <div className="space-y-2.5">
+              <div className="space-y-4">
                 {currentStrategy.weights.map((asset) => (
-                  <div key={asset.ticker} className="space-y-1">
+                  <div key={asset.ticker} className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-bold text-neutral-900 w-12">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-ink w-12">
                           {asset.ticker}
                         </span>
-                        <span className="text-neutral-500">{asset.name}</span>
+                        <span className="text-ink-muted">{asset.name}</span>
                       </div>
-                      <span className="font-mono font-semibold text-neutral-700">
+                      <span className="font-mono font-medium text-ink">
                         {asset.weight}% (${((capitalBase * asset.weight) / 100).toLocaleString()})
                       </span>
                     </div>
-                    <div className="w-full bg-neutral-100 h-1.5 rounded-super-sm overflow-hidden">
+                    <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
                       <div
-                        className="bg-accent h-full rounded-super-sm transition-all duration-300"
+                        className="bg-accent h-full rounded-full transition-all duration-300"
                         style={{ width: `${asset.weight}%` }}
                       />
                     </div>
